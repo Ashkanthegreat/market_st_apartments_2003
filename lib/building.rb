@@ -1,9 +1,11 @@
+
 class Building
-  attr_reader :units
+  attr_reader :units, :renters, :rented_units
 
   def initialize
     @units = []
     @renters = []
+    @rented_units = []
   end
 
   def add_unit(unit)
@@ -11,11 +13,22 @@ class Building
   end
 
   def renters
-    @renters.find_all do
-      if @renter != nil
-        @renters << @renter.name
+    @units.find_all do |unit|
+      if unit.renter != nil
+        @renters << unit.renter.name
       end
     end
+    @renters
   end
+
+  def average_rent
+    units_rents = []
+    @units.each { |unit| units_rents << unit.monthly_rent  }
+
+    ave_rent = units_rents.sum / units_rents.size.to_f
+
+    ave_rent
+  end
+
 
 end
